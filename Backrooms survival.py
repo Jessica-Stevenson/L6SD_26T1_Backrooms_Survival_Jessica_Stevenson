@@ -1,21 +1,17 @@
 import time
 
 
+class character:
+    def __init__(self, Inventory, Health, Enviroment):
+        self.Inventory = Inventory
+        self.Health = Health
+        self.Enviroment = Enviroment
+
 class action:
-    def __init__(self, make, model, year):
-        self.make = make
-        self.model = model
-        self.year = year
-
-    def start_engine(self):
-        print(self.make + " engine has started")
-    
-    def __del__(self):
-        print(f"The car {self.year} {self.make} {self.model} has been deleted.")
-
-def action_menu():
-
-    return
+    def __init__(self, action1, action2, action3):
+        self.action1 = action1
+        self.action2 = action2
+        self.action3 = action3
 
 #Menu Screen of sorts
 print("-")
