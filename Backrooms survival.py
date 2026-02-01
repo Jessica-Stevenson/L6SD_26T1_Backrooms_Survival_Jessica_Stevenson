@@ -1,17 +1,29 @@
 import time
 
-
+#Character Class
+#Contains User's Inventory, Health and Current location
 class character:
-    def __init__(self, Inventory, Health, Enviroment):
+    def __init__(self, Inventory, Status, Enviroment):
         self.Inventory = Inventory
-        self.Health = Health
+        self.Status = Status
         self.Enviroment = Enviroment
 
-class action:
-    def __init__(self, action1, action2, action3):
+#Action Class
+#Contains placeholders for actions the user may take
+class action(character):
+    def __init__(self, Inventory, Status, Enviroment, action1, action2, action3):
+        super().__init__(Inventory, Status, Enviroment)
         self.action1 = action1
         self.action2 = action2
         self.action3 = action3
+    
+    def action_menu(self):
+        print("What would you like to do?")
+        print(f"[1] Check Inventory-------------------------------[4] {self.action1}")
+        print(f"[2] Check Status----------------------------------[5] {self.action2}")
+        print(f"[3] Check Enviroment------------------------------[6] {self.action3}")
+        course_of_action = input()
+        return
 
 #Menu Screen of sorts
 print("-")
@@ -28,31 +40,32 @@ time.sleep(1)
 print("Contiune [y/n]")
 contiune = input()
 if contiune == "y":
-    time.sleep(1)
-    print("-")
-    time.sleep(1)
-    print("-")
-    time.sleep(1)
-    print("-")
-    time.sleep(1)
+    print("----------------------------------")
+    print("---------------ACT I--------------")
+    print("----------------------------------")
+    time.sleep(2)
 else:
     quit() 
 
-print("----------------------------------")
-print("---------------ACT I--------------")
-print("----------------------------------")
+#player = character()
+
+
 time.sleep(1)
 
-print("you were falling. Falling from what? you don't know.")
-time.sleep(5)
+print("You were falling. Falling from what? you don't know.")
+time.sleep(3)
 print("It doesn't matter though. The result is the same.")
-time.sleep(5)
+time.sleep(3)
 print("Endless Hallways expanding Infinitely, yellow wallpaper lines the walls and an annoying buzz sound that you are sure will get on your nerves.") 
 time.sleep(5)
 print("The perfect enviroment to go insane in.")
-time.sleep(5)
+time.sleep(3)
 print("There is not much you can do other then explore")
-time.sleep(2)
-print("Go left or right")
+time.sleep(1)
 
+
+#setting uo the first variables
+Level_0_action_1 = action (["-", "-", "-", "-", "-", "-"], ["Healthy", "Sane"], ["'Level 0'", "Endless Hallways lined with Yellow wallpaper"], "Go left", "Go Right", "-")
+
+Level_0_action_1.action_menu()
 
