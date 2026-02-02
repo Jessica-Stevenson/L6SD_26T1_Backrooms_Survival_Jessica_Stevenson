@@ -1,3 +1,4 @@
+#Adds time to space out text for readability
 import time
 
 #Character Class
@@ -16,14 +17,30 @@ class action(character):
         self.action1 = action1
         self.action2 = action2
         self.action3 = action3
-    
+
     def action_menu(self):
-        print("What would you like to do?")
+        print("\nWhat would you like to do?")
         print(f"[1] Check Inventory-------------------------------[4] {self.action1}")
         print(f"[2] Check Status----------------------------------[5] {self.action2}")
         print(f"[3] Check Enviroment------------------------------[6] {self.action3}")
-        course_of_action = input()
-        return
+        return input("> ")
+
+    def handle_action(self, choice):
+        actions = {
+            "1": lambda: print("Inventory:", self.Inventory),
+            "2": lambda: print("Status:", self.Status),
+            "3": lambda: print("Environment:", self.Enviroment),
+            "4": lambda: print("You chose to", self.action1),
+            "5": lambda: print("You chose to", self.action2),
+            "6": lambda: print("You chose to", self.action3),
+        }
+
+        action = actions.get(choice)
+        if action:
+            action()
+        else:
+            print("Invalid choice.")
+
 
 #Menu Screen of sorts
 print("-")
@@ -47,11 +64,9 @@ if contiune == "y":
 else:
     quit() 
 
-#player = character()
-
-
 time.sleep(1)
 
+#Le story
 print("You were falling. Falling from what? you don't know.")
 time.sleep(3)
 print("It doesn't matter though. The result is the same.")
@@ -63,9 +78,14 @@ time.sleep(3)
 print("There is not much you can do other then explore")
 time.sleep(1)
 
-
 #setting uo the first variables
-Level_0_action_1 = action (["-", "-", "-", "-", "-", "-"], ["Healthy", "Sane"], ["'Level 0'", "Endless Hallways lined with Yellow wallpaper"], "Go left", "Go Right", "-")
+Level_0_action_1 = action(
+    Inventory=["-", "-", "-", "-", "-", "-"],
+    Status=["Healthy", "Sane"],
+    Enviroment=["Level 0", "Endless hallways lined with yellow wallpaper"],
+    action1="Go left",
+    action2="Go right",
+    action3="Stand still"
+)
 
-Level_0_action_1.action_menu()
-
+choice = Level_0_action_1.action_menu()
