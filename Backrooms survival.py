@@ -23,6 +23,7 @@ class action(character):
         print(f"[1] Check Inventory-------------------------------[4] {self.actions[0][0]}")
         print(f"[2] Check Status----------------------------------[5] {self.actions[1][0]}")
         print(f"[3] Check Enviroment------------------------------[6] {self.actions[2][0]}")
+        print("[x] To Exit the Game")
         return input("> ")
 
     #This handles all the actions
@@ -30,7 +31,7 @@ class action(character):
         #these handle the hardcoded actions
         base_actions = {
             "1": lambda: print("Inventory:", self.Inventory),
-            "2": lambda: print("Status:", self.Status),
+            "2": lambda: print(f"Health: {self.Status[0]}, Sanity: {self.Status[1]}"),
             "3": lambda: print("Enviroment:", self.Enviroment),
         }
 
@@ -92,26 +93,37 @@ time.sleep(1)
 #LEVEL 0 ACTION 1
 ########################################
 def go_left():
-    print("You turn left. It's a ladyrinth of hallways and walls.")
-    #Update environment
-    menu.Enviroment = ["Level 1", "A dark corridor stretches endlessly before you."]
+    print("You turn left. It's a labyrinth of hallways and walls.")
+    # Update environment
+    menu.Enviroment = ["Level 0", "Empty Hallways Lined with Yellow Wallpaper"]
     # Update actions
     menu.actions = [
-        ("Go forward", go_forward),
-        ("Go back", go_back),
+        ("Go forward", go_forward_1),
+        ("Go back", go_back_1),
         ("Stand still", stand_still)
     ]
+
 def go_right():
-    print("You turn right. Yellow Wallpaper expands infintly.")
-    menu.Enviroment = ["Level 1B", "The buzzing lights flicker. You notice a bottle of almond water on the floor."]
+    print("You turn right. Yellow wallpaper expands infinitely.")
+    menu.Enviroment = ["Level 0", "As you walk you hear an annoying humming nosie. You notice a bottle of almond water on the floor."]
+    menu.Status[1] = menu.Status - 1
+
     
-    #Add Almond water pickup
+    # Add a action to pick up Almond water
     def pick_up_almond_water():
-        print("You pick up the almond water and put it in your inventory.")
+        print("You pick up the Almond Water.")
         menu.Inventory.append("Almond Water")
+    
+    # Update available actions
+    menu.actions = [
+        ("Pick up almond water", pick_up_almond_water),
+        ("Go back", go_back_2),
+        ("Stand still", stand_still)
+    ]
 
 def stand_still():
-    print("The choice is overwhelming. You stand paralysed unable to decide")
+    print("The choice is overwhelming. You stand paralyzed, unable to decide.")
+    menu.Status[1] = menu.Status - 5
 
 ########################################
 #LEVEL 0 ACTION 2
@@ -120,7 +132,7 @@ def stand_still():
 #sets up the variables
 menu = action(
     Inventory=["-", "-", "-", "-", "-", "-"],
-    Status=["Healthy", "Sane"],
+    Status=[100, 100],
     Enviroment=["Level 0", "Endless hallways lined with yellow wallpaper"],
     actions=[
         ("Go left", go_left),
