@@ -27,29 +27,79 @@ class action(character):
         return input("> ")
 
     #This handles all the actions
-    def handle_action(self, choice):
-        #these handle the hardcoded actions
-        base_actions = {
-            "1": lambda: print("Inventory:", self.Inventory),
-            "2": lambda: print(f"Health: {self.Status[0]}, Sanity: {self.Status[1]}"),
-            "3": lambda: print("Enviroment:", self.Enviroment),
-        }
+def handle_action(self, choice):
+    #Lovely mess of an Inventory
+    def use_inventory():
+        #Checks if Inventory is empty
+        real_items = [i for i in menu.Inventory if i != "-"]
+        
+        if not real_items:
+            print("Your inventory is empty!")
+            return
 
-        #this detrimes if the input is in the hardcoded actions
-        if choice in base_actions:
-            base_actions[choice]()
-            finished = print("Finished? [x]")
-            if finished == "x":
-                return
-            else:
-                print("invalid input")
-        #these handle the actions that are unique to the situation
+        #Display items
+        print("Inventory:")
+        for idx, item in enumerate(real_items, start=1):
+            print(f"[{idx}] {item}")
+        print("[0] Cancel")
+        
+        #Input
+        choice = input("> ").strip()
+        
+        if choice == "0":
+            print("Cancelled.")
+            return
+        
         try:
-            index = int(choice) - 4
-            label, func = self.actions[index]
-            func()
+            index = int(choice) - 1
+            item_choice = real_items[index]
         except (ValueError, IndexError):
             print("Invalid choice.")
+            return
+        
+        if item_choice not in real_items:
+            print(f"You don't have {item_choice} in your inventory!")
+            return
+    
+        ########################################
+        #Items
+        ########################################
+        
+        #Use item
+        if item_choice.lower() == "almond water":
+            menu.Status[1] += 20
+            print("You drink the Almond Water. Sanity restored by 20!")
+            #Remove from inventory (replace with "-")
+            for i in range(len(menu.Inventory)):
+                if menu.Inventory[i].lower() == "almond water":
+                    menu.Inventory[i] = "-"
+                    break
+        else:
+            print(f"You can't use {item_choice} right now.")
+
+    #These handle the hardcoded actions
+    base_actions = {
+        "1": use_inventory,
+        "2": lambda: print(f"Health: {self.Status[0]}, Sanity: {self.Status[1]}"),
+        "3": lambda: print("Enviroment:", self.Enviroment),
+    }
+
+    # Determine if choice is in hardcoded actions
+    if choice in base_actions:
+        base_actions[choice]()
+        finished = input("Finished? [x] ")
+        if finished.lower() == "x":
+            return
+        else:
+            print("Continuing...")
+    # Handle the actions that are unique to the situation
+    try:
+        index = int(choice) - 4
+        label, func = self.actions[index]
+        func()
+    except (ValueError, IndexError):
+        print("Invalid choice.")
+
 
 #Menu Screen of sorts
 print("-")
@@ -98,14 +148,19 @@ def go_left():
     menu.Enviroment = ["Level 0", "Empty Hallways Lined with Yellow Wallpaper"]
     # Update actions
     menu.actions = [
-        ("Go forward", go_forward_1),
-        ("Go back", go_back_1),
+        ("Go forward", go_forward_L0_1),
+        ("Go back", go_back_L0_1),
         ("Stand still", stand_still)
     ]
 
 def go_right():
     print("You turn right. Yellow wallpaper expands infinitely.")
-    menu.Enviroment = ["Level 0", "As you walk you hear an annoying humming nosie. You notice a bottle of almond water on the floor."]
+    time.sleep(3)
+    print("As you walk you hear an annoying humming nosie.")
+    time.sleep(3)
+    print("You notice a bottle of almond water on the floor")
+    time.sleep(1)
+    menu.Enviroment = ["Level 0", "The same Hallways you are starting to get used to. There is a Bottle of Almond Water on the Ground"]
     menu.Status[1] = menu.Status - 1
 
     
@@ -117,7 +172,7 @@ def go_right():
     # Update available actions
     menu.actions = [
         ("Pick up almond water", pick_up_almond_water),
-        ("Go back", go_back_2),
+        ("Go back", go_back_L0_2),
         ("Stand still", stand_still)
     ]
 
@@ -125,9 +180,25 @@ def stand_still():
     print("The choice is overwhelming. You stand paralyzed, unable to decide.")
     menu.Status[1] = menu.Status - 5
 
+
 ########################################
 #LEVEL 0 ACTION 2
 ########################################
+
+def go_forward_L0_1():
+    print("You contiune onwards")
+
+    
+def go_back_L0_1():
+    print("You head back")
+    menu.Enviroment = ["Level 0", "Endless hallways lined with yellow wallpaper"]
+
+def go_back_L0_2():
+    print("You head back")
+    menu.Enviroment = ["Level 0", "Endless hallways lined with yellow wallpaper"]
+
+
+
 
 #sets up the variables
 menu = action(
