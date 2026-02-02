@@ -12,35 +12,43 @@ class character:
 #Action Class
 #Contains placeholders for actions the user may take
 class action(character):
-    def __init__(self, Inventory, Status, Enviroment, action1, action2, action3):
+    def __init__(self, Inventory, Status, Enviroment, actions):
         super().__init__(Inventory, Status, Enviroment)
-        self.action1 = action1
-        self.action2 = action2
-        self.action3 = action3
+        self.actions = actions
 
+    #The action menu
+    #There are two indexs by the actions as one is for the description and one is for the action itself
     def action_menu(self):
         print("\nWhat would you like to do?")
-        print(f"[1] Check Inventory-------------------------------[4] {self.action1}")
-        print(f"[2] Check Status----------------------------------[5] {self.action2}")
-        print(f"[3] Check Enviroment------------------------------[6] {self.action3}")
+        print(f"[1] Check Inventory-------------------------------[4] {self.actions[0][0]}")
+        print(f"[2] Check Status----------------------------------[5] {self.actions[1][0]}")
+        print(f"[3] Check Enviroment------------------------------[6] {self.actions[2][0]}")
         return input("> ")
 
+    #This handles all the actions
     def handle_action(self, choice):
-        actions = {
+        #these handle the hardcoded actions
+        base_actions = {
             "1": lambda: print("Inventory:", self.Inventory),
             "2": lambda: print("Status:", self.Status),
-            "3": lambda: print("Environment:", self.Enviroment),
-            "4": lambda: print("You chose to", self.action1),
-            "5": lambda: print("You chose to", self.action2),
-            "6": lambda: print("You chose to", self.action3),
+            "3": lambda: print("Enviroment:", self.Enviroment),
         }
 
-        action = actions.get(choice)
-        if action:
-            action()
-        else:
+        #this detrimes if the input is in the hardcoded actions
+        if choice in base_actions:
+            base_actions[choice]()
+            finished = print("Finished? [x]")
+            if finished == "x":
+                return
+            else:
+                print("invalid input")
+        #these handle the actions that are unique to the situation
+        try:
+            index = int(choice) - 4
+            label, func = self.actions[index]
+            func()
+        except (ValueError, IndexError):
             print("Invalid choice.")
-
 
 #Menu Screen of sorts
 print("-")
@@ -54,6 +62,8 @@ print("God save you if you hear something wandering around nearby, because it su
 print("-")
 time.sleep(1)
 
+#asking if you'd like to contiune.
+#Confirmation is only here so the user has a chance to read the intro
 print("Contiune [y/n]")
 contiune = input()
 if contiune == "y":
@@ -78,14 +88,55 @@ time.sleep(3)
 print("There is not much you can do other then explore")
 time.sleep(1)
 
-#setting uo the first variables
-Level_0_action_1 = action(
+########################################
+#LEVEL 0 ACTION 1
+########################################
+def go_left():
+    print("You turn left. It's a ladyrinth of hallways and walls.")
+    #Update environment
+    menu.Enviroment = ["Level 1", "A dark corridor stretches endlessly before you."]
+    # Update actions
+    menu.actions = [
+        ("Go forward", go_forward),
+        ("Go back", go_back),
+        ("Stand still", stand_still)
+    ]
+def go_right():
+    print("You turn right. Yellow Wallpaper expands infintly.")
+    menu.Enviroment = ["Level 1B", "The buzzing lights flicker. You notice a bottle of almond water on the floor."]
+    
+    #Add Almond water pickup
+    def pick_up_almond_water():
+        print("You pick up the almond water and put it in your inventory.")
+        menu.Inventory.append("Almond Water")
+
+def stand_still():
+    print("The choice is overwhelming. You stand paralysed unable to decide")
+
+########################################
+#LEVEL 0 ACTION 2
+########################################
+
+#sets up the variables
+menu = action(
     Inventory=["-", "-", "-", "-", "-", "-"],
     Status=["Healthy", "Sane"],
     Enviroment=["Level 0", "Endless hallways lined with yellow wallpaper"],
-    action1="Go left",
-    action2="Go right",
-    action3="Stand still"
+    actions=[
+        ("Go left", go_left),
+        ("Go right", go_right),
+        ("Stand still", stand_still)
+    ]
 )
 
-choice = Level_0_action_1.action_menu()
+#game loop
+while True:
+    print(f"\nCurrent Location: {menu.Enviroment[0]}")
+    print(f"{menu.Enviroment[1]}")
+    choice = menu.action_menu()
+    menu.handle_action(choice)
+    time.sleep(1)
+
+    if choice.lower() == "x":
+        print("Exiting the game. Goodbye!")
+        break
