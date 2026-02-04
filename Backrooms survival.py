@@ -20,11 +20,29 @@ class action(character):
     #There are two indexs by the actions as one is for the description and one is for the action itself
     def action_menu(self):
         print("\nWhat would you like to do?")
-        print(f"[1] Check Inventory-------------------------------[4] {self.actions[0][0]}")
-        print(f"[2] Check Status----------------------------------[5] {self.actions[1][0]}")
-        print(f"[3] Check Enviroment------------------------------[6] {self.actions[2][0]}")
+
+        # Base menu (always shown)
+        print("[1] Check Inventory", end="")
+        if len(self.actions) > 0:
+            print(f"-------------------------------[4] {self.actions[0][0]}")
+        else:
+            print()
+
+        print("[2] Check Status", end="")
+        if len(self.actions) > 1:
+            print(f"----------------------------------[5] {self.actions[1][0]}")
+        else:
+            print()
+
+        print("[3] Check Enviroment", end="")
+        if len(self.actions) > 2:
+            print(f"------------------------------[6] {self.actions[2][0]}")
+        else:
+            print()
+
         print("[x] To Exit the Game")
         return input("> ")
+
 
     #This handles all the actions
     def handle_action(self, choice):
@@ -158,8 +176,8 @@ def go_right():
     time.sleep(2)
     print("As you walk you hear an annoying humming nosie.")
     time.sleep(2)
-    print("You notice a bottle of almond water on the floor")
-    time.sleep(0.5)
+    print("You notice a bottle of Almond Water on the floor")
+    time.sleep(1)
     #Update environment
     menu.Enviroment = ["Level 0", "The same Hallways you are starting to get used to. There is a Bottle of Almond Water on the Ground"]
     #Update Status (decreses sanity)
@@ -262,9 +280,9 @@ def level_1():
     print("You walk through the wall")
     time.sleep(2)
     print("-")
-    time.sleep(1)
+    time.sleep(2)
     print("-")
-    time.sleep(1)
+    time.sleep(2)
     print("-")
     time.sleep(2)
     print("The enviroment is different")
@@ -274,14 +292,15 @@ def level_1():
     print("The floor is damp, The lights flicker more and areas are shrouded in darkness")
     time.sleep(2)
     print("it looks like an empty carpark")
-    time.sleep(1)
+    time.sleep(2)
     print("-")
-    time.sleep(1)
+    time.sleep(2)
     print("A pit forms in your stomach")
     time.sleep(2)
     print("you feel this place is more dangerous")
     time.sleep(2)
     print("you should look for a weapon")
+    time.sleep(2)
     #Update environment
     menu.Enviroment = ["Level 1", "An empty carpark. You feel uneasy"]
     #Update Saatus (Decreases Sanity)
