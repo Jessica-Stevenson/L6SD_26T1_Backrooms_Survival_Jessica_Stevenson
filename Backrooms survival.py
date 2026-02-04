@@ -144,12 +144,12 @@ time.sleep(1)
 ########################################
 def go_left():
     print("You turn left. It's a labyrinth of hallways and walls.")
-    # Update environment
-    menu.Enviroment = ["Level 0", "Empty Hallways Lined with Yellow Wallpaper"]
-    # Update actions
+    #Update environment
+    menu.Enviroment = ["Level 0", "Empty Hallways as far as the eye can see"]
+    #Update actions
     menu.actions = [
-        ("Go forward", go_forward_L0_1),
-        ("Go back", go_back_L0_1),
+        ("Go forward", go_forward_L0_1_2),
+        ("Go back", go_back_L0_1_2),
         ("Stand still", stand_still)
     ]
 
@@ -160,27 +160,32 @@ def go_right():
     time.sleep(2)
     print("You notice a bottle of almond water on the floor")
     time.sleep(0.5)
+    #Update environment
     menu.Enviroment = ["Level 0", "The same Hallways you are starting to get used to. There is a Bottle of Almond Water on the Ground"]
+    #Update Status (decreses sanity)
     menu.Status[1] -= 1
 
     
     # Add a action to pick up Almond water
     def pick_up_almond_water():
         print("You pick up the Almond Water.")
+        #Update Inventory (Adds Almond Water)
         menu.Inventory.append("Almond Water")
         #removes almond water after you pick it ups
         menu.actions = [action for action in menu.actions if action[0] != "Pick up almond water"]
+        #Update Enviroment
         menu.Enviroment[1] = "The same hallways you are starting to get used to. The bottle of Almond Water is gone."
     
     # Update available actions
     menu.actions = [
         ("Pick up almond water", pick_up_almond_water),
-        ("Go back", go_back_L0_2),
+        ("Go back", go_back_L0_2_2),
         ("Stand still", stand_still)
     ]
 
 def stand_still():
     print("The choice is overwhelming. You stand paralyzed, unable to decide.")
+    #Update Saatus (Decreases Sanity)
     menu.Status[1] -= 5
 
 
@@ -188,19 +193,73 @@ def stand_still():
 #LEVEL 0 ACTION 2
 ########################################
 
-def go_forward_L0_1():
+def go_forward_L0_1_2():
     print("You contiune onwards")
+    time.sleep(2)
+    print("The halls stretch on")
+    time.sleep(2)
+    print("You come across a wall that is darker. It is glitching slightly")
+    time.sleep(2)
+    print("it feels as if you could walk through it")
+    time.sleep(2)
+    #Update environment
+    menu.Enviroment = ["Level 0", "You see a darker Wall glitching slightly"]
+    #Update actions
+    menu.actions = [
+        ("Go Through the Wall", level_1),
+        ("Go back", go_back_L0_1_3),
+        ("Stand still", stand_still)
+    ]
 
-    
-def go_back_L0_1():
+def go_back_L0_1_2():
     print("You head back")
     menu.Enviroment = ["Level 0", "Endless hallways lined with yellow wallpaper"]
-
-def go_back_L0_2():
+    menu.actions = [
+        ("Go left", go_left),
+        ("Go right", go_right),
+        ("Stand still", stand_still)
+    ]
+def go_back_L0_2_2():
     print("You head back")
     menu.Enviroment = ["Level 0", "Endless hallways lined with yellow wallpaper"]
+    menu.actions = [
+        ("Go left", go_left),
+        ("Go right", go_right),
+        ("Stand still", stand_still)
+    ]
 
+########################################
+#LEVEL 0 ACTION 2
+########################################
+def go_back_L0_1_3():
+    print("You Retrace your steps")
+    #Update environment
+    menu.Enviroment = ["Level 0", "Empty Hallways as far as the eye can see"]
+    #Update actions
+    menu.actions = [
+        ("Go forward", go_forward_L0_1_2),
+        ("Go back", go_back_L0_1_2),
+        ("Stand still", stand_still)
+    ]
 
+########################################
+#LEVEL 1 Entrance
+########################################
+
+def level_1():
+    print("You walk through the wall")
+    print("-")
+    print("-")
+    print("-")
+    print("")
+    #Update environment
+    menu.Enviroment = ["Level 1", ""]
+    #Update actions
+    menu.actions = [
+        ("Go forward", go_forward_L0_1_2),
+        ("Go back", go_back_L0_1_2),
+        ("Stand still", stand_still)
+    ]
 
 
 #sets up the variables
