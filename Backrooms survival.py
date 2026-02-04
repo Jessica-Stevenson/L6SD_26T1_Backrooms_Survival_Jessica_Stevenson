@@ -174,32 +174,55 @@ def go_left():
 def go_right():
     print("You turn right. Yellow wallpaper expands infinitely.")
     time.sleep(2)
-    print("As you walk you hear an annoying humming nosie.")
+    print("As you walk you hear an annoying humming noise.")
     time.sleep(2)
-    print("You notice a bottle of Almond Water on the floor")
-    time.sleep(1)
-    #Update environment
-    menu.Enviroment = ["Level 0", "The same Hallways you are starting to get used to. There is a Bottle of Almond Water on the Ground"]
-    #Update Status (decreses sanity)
+
+    #Passive Sanity Drop
     menu.Status[1] -= 1
 
-    
-    # Add a action to pick up Almond water
-    def pick_up_almond_water():
-        print("You pick up the Almond Water.")
-        #Update Inventory (Adds Almond Water)
-        menu.Inventory.append("Almond Water")
-        #removes almond water after you pick it ups
-        menu.actions = [action for action in menu.actions if action[0] != "Pick up almond water"]
-        #Update Enviroment
-        menu.Enviroment[1] = "The same hallways you are starting to get used to. The bottle of Almond Water is gone."
-    
-    # Update available actions
-    menu.actions = [
-        ("Pick up almond water", pick_up_almond_water),
-        ("Go back", go_back_L0_2_2),
-        ("Stand still", stand_still)
-    ]
+    if not menu.almond_water_taken:
+        print("You notice a bottle of Almond Water on the floor")
+        time.sleep(1)
+
+        menu.Enviroment = [
+            "Level 0",
+            "The same hallways you are starting to get used to. There is a Bottle of Almond Water on the Ground"
+        ]
+
+        def pick_up_almond_water():
+            print("You pick up the Almond Water.")
+            menu.Inventory.append("Almond Water")
+            menu.almond_water_taken = True
+
+            #Remove pickup option
+            menu.actions = [
+                ("Go back", go_back_L0_2_2),
+                ("Stand still", stand_still)
+            ]
+
+            menu.Enviroment[1] = (
+                "The same hallways you are starting to get used to. "
+                "The bottle of Almond Water is gone."
+            )
+
+        menu.actions = [
+            ("Pick up almond water", pick_up_almond_water),
+            ("Go back", go_back_L0_2_2),
+            ("Stand still", stand_still)
+        ]
+
+    else:
+        #Almond Water already taken
+        menu.Enviroment = [
+            "Level 0",
+            "The same hallways you are starting to get used to. The floor is empty."
+        ]
+
+        menu.actions = [
+            ("Go back", go_back_L0_2_2),
+            ("Stand still", stand_still)
+        ]
+
 
 def stand_still():
     print("The choice is overwhelming. You stand paralyzed, unable to decide.")
@@ -324,6 +347,9 @@ menu = action(
         ("Stand still", stand_still)
     ]
 )
+
+#Item Tracker
+menu.almond_water_taken = False
 
 #game loop
 while True:
