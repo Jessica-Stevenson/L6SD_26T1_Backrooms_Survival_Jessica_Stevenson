@@ -204,6 +204,8 @@ def go_forward_L0_1_2():
     time.sleep(2)
     #Update environment
     menu.Enviroment = ["Level 0", "You see a darker Wall glitching slightly"]
+    #Update Saatus (Decreases Sanity)
+    menu.Status[1] -= 1
     #Update actions
     menu.actions = [
         ("Go Through the Wall", level_1),
@@ -213,7 +215,11 @@ def go_forward_L0_1_2():
 
 def go_back_L0_1_2():
     print("You head back")
+    #Update Enviroment
     menu.Enviroment = ["Level 0", "Endless hallways lined with yellow wallpaper"]
+    #Update Saatus (Decreases Sanity)
+    menu.Status[1] -= 1
+    #Update Actions
     menu.actions = [
         ("Go left", go_left),
         ("Go right", go_right),
@@ -221,7 +227,11 @@ def go_back_L0_1_2():
     ]
 def go_back_L0_2_2():
     print("You head back")
+    #Update Enviroment
     menu.Enviroment = ["Level 0", "Endless hallways lined with yellow wallpaper"]
+    #Update Saatus (Decreases Sanity)
+    menu.Status[1] -= 1
+    #Udpate Actions
     menu.actions = [
         ("Go left", go_left),
         ("Go right", go_right),
@@ -235,6 +245,8 @@ def go_back_L0_1_3():
     print("You Retrace your steps")
     #Update environment
     menu.Enviroment = ["Level 0", "Empty Hallways as far as the eye can see"]
+    #Update Saatus (Decreases Sanity)
+    menu.Status[1] -= 1
     #Update actions
     menu.actions = [
         ("Go forward", go_forward_L0_1_2),
@@ -248,12 +260,32 @@ def go_back_L0_1_3():
 
 def level_1():
     print("You walk through the wall")
+    time.sleep(2)
     print("-")
+    time.sleep(1)
     print("-")
+    time.sleep(1)
     print("-")
-    print("")
+    time.sleep(2)
+    print("The enviroment is different")
+    time.sleep(2)
+    print("Replacing the yellow wallpaper. Concrete walls surround you")
+    time.sleep(2)
+    print("The floor is damp, The lights flicker more and areas are shrouded in darkness")
+    time.sleep(2)
+    print("it looks like an empty carpark")
+    time.sleep(1)
+    print("-")
+    time.sleep(1)
+    print("A pit forms in your stomach")
+    time.sleep(2)
+    print("you feel this place is more dangerous")
+    time.sleep(2)
+    print("you should look for a weapon")
     #Update environment
-    menu.Enviroment = ["Level 1", ""]
+    menu.Enviroment = ["Level 1", "An empty carpark. You feel uneasy"]
+    #Update Saatus (Decreases Sanity)
+    menu.Status[1] -= 5
     #Update actions
     menu.actions = [
         ("Go forward", go_forward_L0_1_2),
