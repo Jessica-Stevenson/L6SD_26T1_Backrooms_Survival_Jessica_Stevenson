@@ -166,6 +166,7 @@ def go_left():
     menu.Enviroment = ["Level 0", "Empty Hallways as far as the eye can see"]
     #Update actions
     menu.actions = [
+        #Read as Action_Level_Branch_ActionNumber
         ("Go forward", go_forward_L0_1_2),
         ("Go back", go_back_L0_1_2),
         ("Stand still", stand_still)
@@ -196,6 +197,7 @@ def go_right():
 
             #Remove pickup option
             menu.actions = [
+                #Read as Action_Level_Branch_ActionNumber
                 ("Go back", go_back_L0_2_2),
                 ("Stand still", stand_still)
             ]
@@ -206,6 +208,7 @@ def go_right():
             )
 
         menu.actions = [
+            #Read as Action_Level_Branch_ActionNumber
             ("Pick up almond water", pick_up_almond_water),
             ("Go back", go_back_L0_2_2),
             ("Stand still", stand_still)
@@ -219,6 +222,7 @@ def go_right():
         ]
 
         menu.actions = [
+            #Read as Action_Level_Branch_ActionNumber
             ("Go back", go_back_L0_2_2),
             ("Stand still", stand_still)
         ]
@@ -249,6 +253,7 @@ def go_forward_L0_1_2():
     menu.Status[1] -= 1
     #Update actions
     menu.actions = [
+        #Read as Action_Level_Branch_ActionNumber
         ("Go Through the Wall", level_1),
         ("Go back", go_back_L0_1_3),
         ("Stand still", stand_still)
@@ -290,6 +295,7 @@ def go_back_L0_1_3():
     menu.Status[1] -= 1
     #Update actions
     menu.actions = [
+        #Read as Action_Level_Branch_ActionNumber
         ("Go forward", go_forward_L0_1_2),
         ("Go back", go_back_L0_1_2),
         ("Stand still", stand_still)
@@ -330,11 +336,96 @@ def level_1():
     menu.Status[1] -= 5
     #Update actions
     menu.actions = [
-        ("Go forward", go_forward_L0_1_2),
-        ("Go back", go_back_L0_1_2),
-        ("Stand still", stand_still)
+        #Read as Action_Level_Branch_ActionNumber
+        ("Go left", go_left_L1_1_1),
+        ("Go right", go_right_L1_2_1),
+        ("Stand still", stand_still_L1)
     ]
 
+########################################
+#LEVEL 1 Action 1
+########################################
+
+def go_left_L1_1_1():
+    print("You head left")
+    print("In the Distance you hear a noise that doesn't sound human")
+    #Update environment
+    menu.Enviroment = ["Level 1", "An eerie Carpack. You heard an inhuman noise in the distance"]
+    #Update Saatus (Decreases Sanity)
+    menu.Status[1] -= 4
+    #Update actions
+    menu.actions = [
+        #Read as Action_Level_Branch_ActionNumber
+        ("Head towards the noise", go_forward_L1_1_2),
+        ("Get away from the noise", go_away_L1_2_2),
+        ("Stand still", stand_still_L1)
+    ]
+
+def go_right_L1_2_1():
+    print("You go right")
+    print("You hear a distant noise")
+    print("It's not nearby")
+    #Update environment
+    menu.Enviroment = ["Level 1", "An eerie carpack. You heard a noise in the distance. Whatever it was it was not nearby"]
+    #Update Saatus (Decreases Sanity)
+    menu.Status[1] -= 2
+    #Update actions
+    menu.actions = [
+        #Read as Action_Level_Branch_ActionNumber
+        ("Contiune Onwards", go_forward_L0_1_2),
+        ("Go back and find the source of the noise", go_back_L0_1_2),
+        ("Stand still", stand_still_L1)
+    ]
+
+def stand_still_L1():
+    print("You feel a looming danger nearby. You don't know what to do.")
+    #Update Saatus (Decreases Sanity)
+    menu.Status[1] -= 5
+    #Update actions
+    menu.actions = [
+        #Read as Action_Level_Branch_ActionNumber
+        ("Go left", go_left_L1_1_1),
+        ("Go right", go_right_L1_2_1),
+        ("Stand still", stand_still_L1)
+    ]
+   
+########################################
+#LEVEL 1 Action 2
+########################################
+
+#Entiy encouter happens here
+def go_forward_L1_1_2():
+    print("You go right")
+    print("You hear a distant noise")
+    print("It's not nearby")
+    #Update environment
+    menu.Enviroment = ["Level 1", "An eerie carpack. You heard a noise in the distance. Whatever it was it was not nearby"]
+    #Update Saatus (Decreases Sanity)
+    menu.Status[1] -= 2
+    #Update actions
+    menu.actions = [
+        #Read as Action_Level_Branch_ActionNumber
+        ("Contiune Onwards", go_forward_L0_1_2),
+        ("Go back and find the source of the noise", go_back_L0_1_2),
+        ("Stand still", stand_still_L1)
+    ]
+
+#go back to the go right path. Will join the path in the next action
+def go_away_L1_2_2():
+    print("You go right")
+    print("You hear a distant noise")
+    print("It's not nearby")
+    #Update environment
+    menu.Enviroment = ["Level 1", "An eerie carpack. You heard a noise in the distance. Whatever it was it was not nearby"]
+    #Update Saatus (Decreases Sanity)
+    menu.Status[1] -= 2
+    #Update actions
+    menu.actions = [
+        #Read as Action_Level_Branch_ActionNumber
+        ("Contiune Onwards", go_forward_L0_1_2),
+        ("Go back and find the source of the noise", go_back_L0_1_2),
+        ("Stand still", stand_still_L1)
+    ]
 
 #sets up the variables
 menu = action(
@@ -347,6 +438,8 @@ menu = action(
         ("Stand still", stand_still)
     ]
 )
+
+
 
 #Item Tracker
 menu.almond_water_taken = False
