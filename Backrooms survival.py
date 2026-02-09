@@ -102,7 +102,24 @@ class action(character):
             "3": lambda: print("Enviroment:", self.Enviroment),
         }
 
-        # Determine if choice is in hardcoded actions
+        #Game Over
+        def Game_Over():
+            print("L")
+    
+        if self.Status[0] == 100:
+            self.Status[0] = 100
+        
+        if self.Status[1] == 100:
+            self.Status[1] = 100
+
+        if self.Status[0] == 0:
+            Game_Over()
+
+        if self.Status[1] == 0:
+            Game_Over()
+
+
+        #Determine if choice is in hardcoded actions
         if choice in base_actions:
             base_actions[choice]()
             finished = input("Finished? [x] ")
@@ -110,7 +127,7 @@ class action(character):
                 return
             else:
                 print("Continuing...")
-        # Handle the actions that are unique to the situation
+        #Handle the actions that are unique to the situation
         try:
             index = int(choice) - 4
             label, func = self.actions[index]
