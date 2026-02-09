@@ -83,10 +83,28 @@ class action(character):
             #Items
             ########################################
             
+            #Game Over
+            def Game_Over():
+                print("L")
+
+            def Status_Check():
+                if self.Status[0] == 100:
+                    self.Status[0] = 100
+                
+                if self.Status[1] == 100:
+                    self.Status[1] = 100
+
+                if self.Status[0] == 0:
+                    Game_Over()
+
+                if self.Status[1] == 0:
+                    Game_Over()
+
             #Use item
             if item_choice.lower() == "almond water":
                 menu.Status[1] += 20
                 print("You drink the Almond Water. Sanity restored by 20!")
+                Status_Check()
                 #Remove from inventory (replace with "-")
                 for i in range(len(menu.Inventory)):
                     if menu.Inventory[i].lower() == "almond water":
@@ -101,23 +119,6 @@ class action(character):
             "2": lambda: print(f"Health: {self.Status[0]}, Sanity: {self.Status[1]}"),
             "3": lambda: print("Enviroment:", self.Enviroment),
         }
-
-        #Game Over
-        def Game_Over():
-            print("L")
-    
-        if self.Status[0] == 100:
-            self.Status[0] = 100
-        
-        if self.Status[1] == 100:
-            self.Status[1] = 100
-
-        if self.Status[0] == 0:
-            Game_Over()
-
-        if self.Status[1] == 0:
-            Game_Over()
-
 
         #Determine if choice is in hardcoded actions
         if choice in base_actions:
@@ -365,7 +366,9 @@ def level_1():
 
 def go_left_L1_1_1():
     print("You head left")
+    time.sleep(2)
     print("In the Distance you hear a noise that doesn't sound human")
+    time.sleep(2)
     #Update environment
     menu.Enviroment = ["Level 1", "An eerie Carpack. You heard an inhuman noise in the distance"]
     #Update Saatus (Decreases Sanity)
@@ -380,8 +383,11 @@ def go_left_L1_1_1():
 
 def go_right_L1_2_1():
     print("You go right")
+    time.sleep(2)
     print("You hear a distant noise")
+    time.sleep(2)
     print("It's not nearby")
+    time.sleep(2)
     #Update environment
     menu.Enviroment = ["Level 1", "An eerie carpack. You heard a noise in the distance. Whatever it was it was not nearby"]
     #Update Saatus (Decreases Sanity)
@@ -427,7 +433,7 @@ def go_forward_L1_1_2():
         ("Stand still", stand_still_L1)
     ]
 
-#go back to the go right path. Will join the path in the next action
+#go back to the go right branch. Will join the path in the next action
 def go_away_L1_2_2():
     print("You go right")
     print("You hear a distant noise")
@@ -444,7 +450,7 @@ def go_away_L1_2_2():
         ("Stand still", stand_still_L1)
     ]
 
-#sets up the variables
+#Sets up the variables
 menu = action(
     Inventory=["-", "-", "-", "-", "-", "-"],
     Status=[100, 100],
@@ -461,7 +467,7 @@ menu = action(
 #Item Tracker
 menu.almond_water_taken = False
 
-#game loop
+#Game Loop
 while True:
     print(f"\nCurrent Location: {menu.Enviroment[0]}")
     print(f"{menu.Enviroment[1]}")
